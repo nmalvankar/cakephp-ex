@@ -40,13 +40,9 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 2. Clone your repository to your development machine and cd to the repository directory
 3. Add a PHP application from the provided template and specify the source url to be your forked repo  
 
-		$ oc new-app openshift/templates/cakephp.json -p SOURCE_REPOSITORY_URL=<your repository location>
-
-4. Depending on the state of your system, and whether additional items need to be downloaded, it may take around a minute for your build to be started automatically.  If you do not want to wait, run
-
-		$ oc start-build cakephp-example
-
-5. Once the build is running, watch your build progress  
+		$ oc process -f https://raw.githubusercontent.com/nmalvankar/cakephp-ex/master/openshift/templates/cakephp-mysql-template.yaml | oc apply -f -
+		
+4. Once the build is running, watch your build progress  
 
 		$ oc logs build/cakephp-example-1
 
@@ -78,26 +74,6 @@ In this case, the IP for cakephp-example is 172.30.97.123 and it is on port 8080
 
 Review some of the common tips and suggestions [here](https://github.com/openshift/origin/blob/master/docs/debugging-openshift.md).
 
-### Installation: With MySQL
-1. Follow the steps for the Manual Installation above for all but step 3, instead use step 2 below.  
-  - Note: The output in steps 5-6 may also display information about your database.
-2. Add a PHP application from the cakephp-mysql template and specify the source url to be your forked repo  
-
-		$ oc new-app openshift/templates/cakephp-mysql.json -p SOURCE_REPOSITORY_URL=<your repository location>
-
-
-### Adding Webhooks and Making Code Changes
-Since OpenShift V3 does not provide a git repository out of the box, you can configure your github repository to make a webhook call whenever you push your code.
-
-1. From the Web Console homepage, navigate to your project
-2. Click on Browse > Builds
-3. Click the link with your BuildConfig name
-4. Click the Configuration tab
-5. Click the "Copy to clipboard" icon to the right of the "GitHub webhook URL" field
-6. Navigate to your repository on GitHub and click on repository settings > webhooks > Add webhook
-7. Paste your webhook URL provided by OpenShift
-8. Leave the defaults for the remaining fields - That's it!
-9. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
 
 ### Enabling the Database example
 In order to access the example CakePHP home page, which contains application stats including database connectivity, you have to go into the app/View/Layouts/ directory, remove the default.ctp and after that rename default.ctp.default into default.ctp`.
