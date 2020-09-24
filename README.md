@@ -36,7 +36,7 @@ Since the quickstarts are shared code, we had to take special consideration to e
 ### Installation:
 These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](https://docs.okd.io/latest/install_config/imagestreams_templates.html#creating-image-streams-for-openshift-images).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
-1. Add a PHP application from the provided template  
+1. Deploy the PHP application + MySQL from the provided template  
 
 		$ oc process -f https://raw.githubusercontent.com/nmalvankar/cakephp-ex/master/openshift/templates/cakephp-mysql-template.yaml | oc apply -f -
 		
