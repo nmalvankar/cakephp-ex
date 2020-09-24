@@ -44,17 +44,20 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 
 		$ oc logs -f bc/cakephp-example
 
-3. Wait for cakephp-example pods to start up (this can take a few minutes):  
+3. Wait for cakephp-example and mysql pods to start up (this can take a few minutes):  
 
 		$ oc get pods -w
 
 
 	Sample output:  
 
-	       NAME                      READY     REASON         RESTARTS   AGE
-	       cakephp-example-1-build   0/1       ExitCode:0     0          8m
-	       cakephp-example-1-pytud   1/1       Running        0          2m
-
+	       NAME                               READY   STATUS      RESTARTS   AGE
+			cakephp-mysql-example-1-build      0/1     Completed   0          48m
+			cakephp-mysql-example-1-cdj8j      1/1     Running     0          47m
+			cakephp-mysql-example-1-deploy     0/1     Completed   0          47m
+			cakephp-mysql-example-1-hook-pre   0/1     Completed   0          47m
+			mysql-1-2xbvk                      1/1     Running     0          48m
+			mysql-1-deploy                     0/1     Completed   0          48m
 
 4. Check the IP and port the cakephp-example service is running on:  
 
@@ -62,19 +65,12 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 
 	Sample output:  
 
-	       NAME              LABELS                     SELECTOR               IP(S)           PORT(S)
-	       cakephp-example   template=cakephp-example   name=cakephp-example   172.30.97.123   8080/TCP
+	       NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+			cakephp-mysql-example   ClusterIP   172.21.235.170   <none>        8080/TCP   50m
+			mysql                   ClusterIP   172.21.39.200    <none>        3306/TCP   50m
 
-In this case, the IP for cakephp-example is 172.30.97.123 and it is on port 8080.  
+In this case, the IP for cakephp-example is 172.21.235.170 and it is on port 8080.  
 *Note*: you can also get this information from the web console.
-
-
-### Enabling the Database example
-In order to access the example CakePHP home page, which contains application stats including database connectivity, you have to go into the app/View/Layouts/ directory, remove the default.ctp and after that rename default.ctp.default into default.ctp`.
-
-It will also be necessary to update your application to talk to your database back-end. The app/Config/database.php file used by CakePHP was set up in such a way that it will accept environment variables for your connection information that you pass to it. Once an administrator has created a MySQL database service for you to connect with you can add the following environment variables to your deploymentConfig to ensure all your cakephp-example pods have access to these environment variables. Note: the cakephp-mysql.json template creates the DB service and environment variables for you.
-
-You will then need to rebuild the application.  This is done via either a `oc start-build` command, or through the web console, or a webhook trigger in github initiating a build after the code changes are pushed.
 
 
 ### Source repository layout
