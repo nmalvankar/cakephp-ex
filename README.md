@@ -59,7 +59,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 			mysql-1-2xbvk                      1/1     Running     0          48m
 			mysql-1-deploy                     0/1     Completed   0          48m
 
-4. Check the IP and port the cakephp-example service is running on:  
+4. Check the IP and port the cakephp-example & mysql services are running on:  
 
 		$ oc get svc
 
