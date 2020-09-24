@@ -36,17 +36,15 @@ Since the quickstarts are shared code, we had to take special consideration to e
 ### Installation:
 These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](https://docs.okd.io/latest/install_config/imagestreams_templates.html#creating-image-streams-for-openshift-images).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
-1. Fork a copy of [cakephp-ex](https://github.com/sclorg/cakephp-ex)
-2. Clone your repository to your development machine and cd to the repository directory
-3. Add a PHP application from the provided template and specify the source url to be your forked repo  
+1. Add a PHP application from the provided template  
 
 		$ oc process -f https://raw.githubusercontent.com/nmalvankar/cakephp-ex/master/openshift/templates/cakephp-mysql-template.yaml | oc apply -f -
 		
-4. Once the build is running, watch your build progress  
+2. Once the build is running, watch your build progress  
 
 		$ oc logs -f bc/cakephp-example
 
-6. Wait for cakephp-example pods to start up (this can take a few minutes):  
+3. Wait for cakephp-example pods to start up (this can take a few minutes):  
 
 		$ oc get pods -w
 
@@ -58,7 +56,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 	       cakephp-example-1-pytud   1/1       Running        0          2m
 
 
-7. Check the IP and port the cakephp-example service is running on:  
+4. Check the IP and port the cakephp-example service is running on:  
 
 		$ oc get svc
 
@@ -82,19 +80,6 @@ It will also be necessary to update your application to talk to your database ba
 
 You will then need to rebuild the application.  This is done via either a `oc start-build` command, or through the web console, or a webhook trigger in github initiating a build after the code changes are pushed.
 
-### Hot Deploy
-
-In order to immediately pick up changes made in your application source code, you need to run your built image with the `OPCACHE_REVALIDATE_FREQ=0` parameter to the [oc new-app](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#basic-cli-operations) command, while performing the [installation steps](https://github.com/sclorg/cakephp-ex#installation) described in this README.
-
-	$ oc new-app openshift/templates/cakephp-mysql.json -p OPCACHE_REVALIDATE_FREQ=0
-
-Hot deploy works out of the box in the php image used with this example.
-
-To change your source code in the running container you need to [oc rsh](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into it.
-
-	$ oc rsh <POD_ID>
-
-After you [oc rsh](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into the running container, your current directory is set to `/opt/app-root/src`, where the source code is located.
 
 ### Source repository layout
 
