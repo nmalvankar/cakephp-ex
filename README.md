@@ -68,10 +68,6 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 In this case, the IP for cakephp-example is 172.30.97.123 and it is on port 8080.  
 *Note*: you can also get this information from the web console.
 
-### Debugging Unexpected Failures
-
-Review some of the common tips and suggestions [here](https://github.com/openshift/origin/blob/master/docs/debugging-openshift.md).
-
 
 ### Enabling the Database example
 In order to access the example CakePHP home page, which contains application stats including database connectivity, you have to go into the app/View/Layouts/ directory, remove the default.ctp and after that rename default.ctp.default into default.ctp`.
