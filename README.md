@@ -44,7 +44,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 		
 4. Once the build is running, watch your build progress  
 
-		$ oc logs build/cakephp-example-1
+		$ oc logs -f bc/cakephp-example
 
 6. Wait for cakephp-example pods to start up (this can take a few minutes):  
 
